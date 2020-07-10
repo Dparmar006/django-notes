@@ -5,8 +5,9 @@ from .models import Notes
 # form
 from .forms import AddNotesForm
 from .forms import NoteUserCreationForm
-# generic views
 
+# messages
+from django.contrib import messages
 from django.views.generic import CreateView, FormView, ListView
 
 # Create your views here.
@@ -39,15 +40,30 @@ def home(request):
 
 def delete_note(request,pk):
   note_id = pk
+  messages.error(request, f'Note deleted !')
   Notes.objects.filter(pk=note_id).delete()
+
   return redirect('HomePage')
 
 def edit_note(request,pk):
   note_id = pk
-  id = Notes.objects.filter(pk=note_id).values_list('pk')
-  title = Notes.objects.filter(pk=note_id).values_list('title')
-  content = Notes.objects.filter(pk=note_id).values_list('content')
-  print(id, title, content)
-  notes = Notes.objects.all()
-  form = AddNotesForm({'pk' : id, 'title' : title, 'content' : content})
+  notes_edit = Notes.objects.filter(pk=note_id)
+  for c in notes_edit :
+    title = c.title
+    content = c.content
+
+  notes = Notes.objects.all().order_by('-pk')
+ 
+  if request.method == 'POST':
+    form = AddNotesForm(request.POST)
+    if form.is_valid():
+      form.save()
+      Notes.objects.filter(pk=note_id).delete()
+      return redirect('HomePage')
+  else:
+     form = AddNotesForm({
+    'title' : title,
+    'content' : content
+  })
+
   return render(request, 'notes/home.html',{'notes' : notes, 'form' : form})
