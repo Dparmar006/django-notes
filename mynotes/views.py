@@ -8,10 +8,10 @@ from django.contrib.auth.forms import AuthenticationForm
 
 # messages
 from django.contrib import messages
-from django.views.generic import CreateView, FormView, ListView
 
 # authentication
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def RegisterUser(request):
@@ -52,6 +52,7 @@ def logout_view(request):
 def test(request):
   return HttpResponse('Done !')
 
+@login_required
 def home(request):
   if request.method == 'POST':
     form = AddNotesForm(request.POST)
@@ -72,7 +73,7 @@ def home(request):
   notes = Notes.objects.filter(created_by_id = form_user).order_by('-pk')
   return render(request, 'notes/home.html', {'form' : form, 'notes' : notes})
 
-
+@login_required
 def delete_note(request,pk):
   note_id = pk
   messages.error(request, f'Note deleted !')
@@ -80,6 +81,7 @@ def delete_note(request,pk):
 
   return redirect('HomePage')
 
+@login_required
 def edit_note(request,pk):
   note_id = pk
   notes_edit = Notes.objects.filter(pk=note_id)
