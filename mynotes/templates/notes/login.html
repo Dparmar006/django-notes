@@ -10,8 +10,8 @@
             v class="col-md-8">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Create Admin</h4>
-                  <p class="card-category">Register new Admin</p>
+                  <h4 class="card-title">Login User</h4>
+                  <p class="card-category">Enter username and password</p>
                 </div>
                 <div class="card-body">
                 <form class="form-group" method="POST">
@@ -20,9 +20,9 @@
                   {{form|crispy}}
                   
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary pull-right">Register</button>
+                    <button type="submit" class="btn btn-primary pull-right">Login</button>
                   </div>
-                  <div class="text-primary">Already have an account ? <a class="ml-2" href={% url 'login' %}> Log In </a></div>
+                  <div class="text-primary">Don't have an account ? <a class="ml-2" href={% url 'register' %}> Register </a></div>
                  </div>
                 </form>
                 </div>
