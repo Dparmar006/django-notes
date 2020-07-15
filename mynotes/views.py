@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
+
 # models
 from django.contrib.auth.models import User
 from .models import Notes
+
 # form
 from .forms import AddNotesForm, NoteUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -49,9 +51,6 @@ def logout_view(request):
   return redirect('login')
   
 
-def test(request):
-  return HttpResponse('Done !')
-
 @login_required
 def home(request):
   if request.method == 'POST':
@@ -76,7 +75,10 @@ def home(request):
 @login_required
 def delete_note(request,pk):
   note_id = pk
-  messages.error(request, f'Note deleted !')
+  todeleted_note = list(Notes.objects.filter(pk = note_id))  
+  for c in todeleted_note :
+    title = c.title
+  messages.error(request, f' { title } Note deleted ! ')
   Notes.objects.filter(pk=note_id).delete()
 
   return redirect('HomePage')
@@ -111,5 +113,4 @@ def edit_note(request,pk):
     'title' : title,
     'content' : content
   })
-
   return render(request, 'notes/home.html',{'notes' : notes, 'form' : form})
