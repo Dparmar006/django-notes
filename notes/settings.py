@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '0*1i8k=!#8tf!4h$)-xx&15961lybgf38zb=dy2rufhph!$ygw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['my-django-note-app.herokuapp.com']
 
