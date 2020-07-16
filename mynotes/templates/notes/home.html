@@ -9,7 +9,7 @@
           {% comment %} task {% endcomment %}
           <div class="col-lg-8 col-md-12">
               <div class="card">
-                <div class="card-header card-header-tabs card-header-warning">
+                <div class="card-header card-header-tabs card-header-warning active">
                   <div class="nav-tabs-navigation">
                     <div class="nav-tabs-wrapper">
                       <span class="nav-tabs-title">Tasks:</span>
@@ -44,7 +44,7 @@
 
                         {% for note in notes %}
                           <tr>
-                            <td>
+                            {% comment %} <td>
                               <div class="form-check">
                                 <label class="form-check-label">
                                   <input class="form-check-input" type="checkbox" value="">
@@ -53,7 +53,7 @@
                                   </span>
                                 </label>
                               </div>
-                            </td>
+                            </td> {% endcomment %}
                             <td><h4>{{note.title}}</h4>{{note.content}}</td>
                             <td class="td-actions text-right">
                               <a href="/edit/{{note.pk}}/" onclick="window.location.reload(true);" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
